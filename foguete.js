@@ -1,18 +1,22 @@
+"use strict"
+
 //Duração em segundos de cada etapa
-const durEtap1 = 6;
-const durEtap2 = 6;
-const durEtap3 = 3;
+const durEtap1 = 60;
+const durEtap2 = 60;
+const durEtap3 = 30;
+const duracaoTotal = durEtap1 + durEtap2 + durEtap3;
+const liberacaoSat = 5;
 //Capacidades dos compartimentos de combustivel.
 const capacidade1 = 222;
 const capacidade2 = 522;
-const capacidade3 = 2000;
+const capacidade3 = 1822;
 //Acelerações com todos os compartimentos de comb cheios
-const aceleração1 = (6000 - capacidade1) / durEtap1;
-const aceleração2 = (4000 - capacidade2) / durEtap2;
-const aceleração3 = (30320 - capacidade3) / durEtap3;
+const aceleração1 = 6000 / durEtap1;
+const aceleração2 = 4000 / durEtap2;
+const aceleração3 = 30320 / durEtap3;
 const velocEscape = 40320;
 //Peso inicial
-const pesoInicial = 15432;
+const pesoInicial = 30452.5;
 // Contagem de tempo
 let tempoDecorrido = 0;
 let propulsao = false;
@@ -22,41 +26,67 @@ let combustivel = new Combustivel(capacidade1, capacidade2, capacidade3);
 let peso = new Peso(pesoInicial);
 let velocidade = new Velocidade();
 
+//Inicia o lançamento do foguete.
 function iniciaProp() {
     propulsao = true;
-    let cancel = setInterval(incrementSeconds, 1000);
+    let cancel = setInterval(atualizaInfo, 1000);
     let button = document.getElementById('ig-button');
     button.disabled = true;
 }
 
-function incrementSeconds() {
+//Atualiza o painel de informações
+function atualizaInfo() {
     seconds++;
     let el = document.getElementById('time');
     el.innerText = seconds + 's';
     let el1 = document.getElementById('avisos');
 
     if (propulsao === true) {
-        if (seconds <= durEtap1) {
-            combustivel.decrementa1();
-            velocidade.incrementaVel(aceleração1 + combustivel.getConsEt1());
-            peso.decrementaPeso(combustivel.getConsEt1());
+        if (ehEtapa1()) {
             el1.innerText = "Primeira etapa do lançamento em andamento."
-        } else if (seconds <= durEtap1 + durEtap2) {
-            combustivel.decrementa2();
-            velocidade.incrementaVel(aceleração2 + combustivel.getConsEt2());
-            peso.decrementaPeso(combustivel.getConsEt2());
+            combustivel.decrementa1();
+            velocidade.incrementaVel(aceleração1);
+            peso.decrementaPeso(combustivel.getConsEt1());
+        } else if (ehEtapa2()) {
             el1.innerText = "Segunda etapa do lançamento em andamento."
-        } else if (seconds <= durEtap1 + durEtap2 + durEtap3){
-            combustivel.decrementa3();
-            velocidade.incrementaVel(aceleração3 + combustivel.getConsEt3());
-            peso.decrementaPeso(combustivel.getConsEt3());
+            combustivel.decrementa2();
+            velocidade.incrementaVel(aceleração2);
+            peso.decrementaPeso(combustivel.getConsEt2());
+        } else if (ehEtapa3()){
             el1.innerText = "Terceira etapa do lançamento em andamento."
+            combustivel.decrementa3();
+            velocidade.incrementaVel(aceleração3);
+            peso.decrementaPeso(combustivel.getConsEt3());
+        } else if (seconds - duracaoTotal < liberacaoSat){
+            el1.innerText = "Fora da atmosfera da terra. Liberando satélite..."
         } else {
-            el1.innerText = "Fora da atmosfera da terra."
+            el1.innerText = "Satélite Liberado com sucesso."
         }
     }
 }
-//método para incremetar na aceleração peso perdido;
+
+function ehEtapa1(){
+    if (seconds <= durEtap1) 
+        return true;
+    else 
+        return false;
+}
+
+function ehEtapa2(){
+    if (seconds <= durEtap1 + durEtap2) 
+        return true;
+    else 
+        return false
+}
+
+function ehEtapa3(){
+    if (seconds <= duracaoTotal) 
+        return true;
+    else 
+        return false;
+}
+
+// Classes
 function Combustivel(cap1, cap2, cap3) {
     // informação sobre ocupação dos compartimentos
     this.compartimento1 = new Number(cap1);

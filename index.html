@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FogueteStars</title>
     <link rel="icon" type="image/x-icon" href="images/rocket.ico">
+    <script src="foguete.js"></script>
 </head>
 <body>
     <h1>Lançamento do Foguete Stars:</h1>
@@ -22,7 +23,7 @@
             No primeiro estágio ele acelera até 6 mil km/h, por cerca de 60 segundos e é necessária apenas uma centelha para iniciar a combustão e propulsão;
         </li> 
         <li>
-            No segundo estágio ele acelera até 10 mil km/h, esse durante mais 60 segundos e a centelha deve ser contínua;
+            No segundo estágio ele acelera até 10 mil km/h, durante os próximos 60 segundos você deve manter a centelha acesa;
         </li>
         <li>
             No terceiro estágio ele acelera até 40.320 km/h (velocidade de escape), durante 30 segundos e desta vez são necessárias 3 centelhas seguidas para iniciar a combustão do terceiro compartimento.
@@ -35,7 +36,9 @@
         <br>
         <strong>Avisos: </strong> <label for="" id="avisos"></label>
         <br>
-        Velocidade: <label for=""> 0 Km/h </label>
+        Tempo de voo: <label for="" id="time"> 0s</label>
+        <br>
+        Velocidade: <label for="" id="velocidade"> 0 Km/h </label>
         <br>
         Peso: <label for="" id="peso"> 5432,5 Kg </label>
         <br>
@@ -52,7 +55,7 @@
         <br>
         <input type="text" id = 'começou' placeholder="Digite Start para ignição">
         <br>
-        <button>Mantenha a centelha acesa</button>
+        <button>Segure para manter a centelha acesa</button>
         <br>
         <button>Acenda as centelhas </button>
     </label>

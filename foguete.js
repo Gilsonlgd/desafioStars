@@ -1,3 +1,4 @@
+
 const duraçãoEtapa1 = 60;
 const duraçãoEtapa2 = 60;
 const duraçãoEtapa3 = 30;
@@ -9,10 +10,23 @@ const capacidade3 = 1000;
 const aceleração1 = 6000 / duraçãoEtapa1; // + bonus do peso
 const aceleração2 = 4000 / duraçãoEtapa2;
 const aceleração3 = 30320 / duraçãoEtapa3;
-
 // Contagem de tempo
 let tempoDecorrido = 0;
 let iniciou = false;
+let seconds = 0;
+
+
+if (iniciou === true) {
+    let cancel = setInterval(incrementSeconds, 1000);
+}
+
+function incrementSeconds() {
+    seconds++;
+    let el = document.getElementById('time');
+    el.innerText = seconds + 's';
+}
+
+//método para incremetar na aceleração peso perdido;
 
 function Combustível(capacidade1, capacidade2, capacidade3) {
     // informação sobre ocupação dos compartimentos
@@ -25,7 +39,7 @@ function Combustível(capacidade1, capacidade2, capacidade3) {
     const consEtapa3 = capacidade3 / duraçãoEtapa3;
 
     this.decrementa1 = function(){
-        this.compartimento1 -= consComp1;
+        this.compartimento1 -= consEtapa1;
         //modifica label compartimento1;
     }
     this.decrementa2 = function(){
@@ -42,6 +56,7 @@ function Peso(pesoAtual){
     this.pesoAtual = pesoAtual;
     this.decrementaPeso = function(decremento){
         this.pesoAtual -= decremento;
+        //modifica label peso
     }
 }
 
@@ -49,6 +64,7 @@ function Velocidade(){
     this.velocidadeAtual = 0;
     this.incrementaVel = function(incremento){
         this.velocidadeAtual += incremento;
+        //modifica label velocidade
     }
 }
 

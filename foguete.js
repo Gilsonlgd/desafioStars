@@ -33,33 +33,30 @@ function incrementSeconds() {
     seconds++;
     let el = document.getElementById('time');
     el.innerText = seconds + 's';
+    let el1 = document.getElementById('avisos');
 
     if (propulsao === true) {
         if (seconds <= durEtap1) {
             combustivel.decrementa1();
             velocidade.incrementaVel(aceleração1);
             peso.decrementaPeso(capacidade1 / durEtap1);
-            //aviso de primeira etapa;
+            el1.innerText = "Primeira etapa do lançamento em andamento."
         } else if (seconds <= durEtap1 + durEtap2) {
             combustivel.decrementa2();
             velocidade.incrementaVel(aceleração2);
             peso.decrementaPeso(capacidade2 / durEtap2);
-            //aviso de segunda etapa;
+            el1.innerText = "Segunda etapa do lançamento em andamento."
         } else if (seconds <= durEtap1 + durEtap2 + durEtap3){
             combustivel.decrementa3();
             velocidade.incrementaVel(aceleração3);
             peso.decrementaPeso(capacidade3 / durEtap3);
-            //aviso de 3 etapa
+            el1.innerText = "Terceira etapa do lançamento em andamento."
         } else {
-            //aviso de saiu da terra
+            el1.innerText = "Fora da atmosfera da terra."
         }
     }
 }
-
-
 //método para incremetar na aceleração peso perdido;
-//avisos de mudança de etapa
-
 function Combustivel(cap1, cap2, cap3) {
     // informação sobre ocupação dos compartimentos
     this.compartimento1 = new Number(cap1);
@@ -106,4 +103,5 @@ function Velocidade(){
         el.innerText = this.velocidadeAtual.toFixed(2) + ' Km/h';
     }
 }
+
 

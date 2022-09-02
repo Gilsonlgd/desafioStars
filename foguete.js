@@ -9,7 +9,7 @@ const liberacaoSat = 5;
 const capacidade1 = 222;
 const capacidade2 = 522;
 const capacidade3 = 1822;
-//Acelerações com todos os compartimentos de comb cheios
+//Acelerações médias em cada estágio
 const aceleração1 = 6000 / durEtap1;
 const aceleração2 = 4000 / durEtap2;
 const aceleração3 = 30320 / durEtap3;
@@ -17,8 +17,8 @@ const velocEscape = 40320;
 //Peso inicial
 const pesoInicial = 30452.5;
 // Contagem de tempo
-let propulsao = false;
 let seconds = 0;
+let propulsao = false;
 // Instanciamento dos Objetos
 let combustivel = new Combustivel(capacidade1, capacidade2, capacidade3);
 let peso = new Peso(pesoInicial);
@@ -29,9 +29,6 @@ function iniciaLanc() {
     propulsao = true;
     let cancel = setInterval(atualizaInfo, 1000);
     let botao = document.getElementById('ig-button');
-    if (propulsao === false) {
-        clearInterval(cancel);
-    }
     botao.disabled = true;
 }
 
@@ -70,6 +67,7 @@ function atualizaInfo() {
     }
 }
 
+//Atualiza a situação da propulsão de acordo com as etapas 1 e 2
 function consultaPropulsao() {
     if (ehEtapa1()) {
         propulsao = true;
@@ -81,13 +79,13 @@ function consultaPropulsao() {
 function confereCentelha(){
     let botao1 = document.getElementById('etapa2-button');
     var intervalo;
-
+    //confere se o botão está sendo clicado
     botao1.addEventListener("mousedown", function(e){
         if(e.buttons == 2){
             intervalo = setInterval(propulsao = true, 100);
         }
     });
-
+    //confere se o o botão foi solto
     botao1.addEventListener("mouseup", function(){
         botao1.disabled = true;
         //se na etapa 2 parar de apertar o botão, foguete falha.
@@ -96,21 +94,21 @@ function confereCentelha(){
         }
     });
 }
-
+//confere se está na etapa 1
 function ehEtapa1(){
     if (seconds <= durEtap1) 
         return true;
     else 
         return false;
 }
-
+//confere se está na etapa 2
 function ehEtapa2(){
     if (seconds <= durEtap1 + durEtap2 && seconds > durEtap1) 
         return true;
     else 
         return false
 }
-
+//confere se está na etapa 3
 function ehEtapa3(){
     if (seconds <= duracaoTotal && seconds > durEtap1 + durEtap2)  
         return true;

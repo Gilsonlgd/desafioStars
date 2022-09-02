@@ -26,7 +26,7 @@
             No segundo estágio ele acelera até 10 mil km/h, durante os próximos 60 segundos você deve manter a centelha acesa;
         </li>
         <li>
-            No terceiro estágio ele acelera até 40.320 km/h (velocidade de escape), durante 30 segundos e desta vez são necessárias 3 centelhas seguidas para iniciar a combustão do terceiro compartimento.
+            No terceiro estágio ele acelera até 40.320 km/h (velocidade de escape), durante 30 segundos e desta vez, se tudo ocorreu bem nos estágios anteriores, o computador toma conta da propulsão.
         </li>
     </ol>
 
@@ -53,11 +53,9 @@
     <label for="">
         <strong>Painel de Controle:</strong>
         <br>
-        <button id="ig-button" onclick="iniciaProp()"> OK </button>
+        <button id="ig-button" onclick="iniciaLanc()"> OK </button>
         <br>
-        <button>Segure para manter a centelha acesa</button>
-        <br>
-        <button>Acenda as centelhas </button>
+        <button id="etapa2-button">Segure para manter a centelha acesa</button>
     </label>
 </body>
 </html>

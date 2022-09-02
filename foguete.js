@@ -1,5 +1,4 @@
 "use strict"
-
 //Duração em segundos de cada etapa
 const durEtap1 = 60;
 const durEtap2 = 60;
@@ -18,7 +17,6 @@ const velocEscape = 40320;
 //Peso inicial
 const pesoInicial = 30452.5;
 // Contagem de tempo
-let tempoDecorrido = 0;
 let propulsao = false;
 let seconds = 0;
 // Instanciamento dos Objetos
@@ -27,11 +25,14 @@ let peso = new Peso(pesoInicial);
 let velocidade = new Velocidade();
 
 //Inicia o lançamento do foguete.
-function iniciaProp() {
+function iniciaLanc() {
     propulsao = true;
     let cancel = setInterval(atualizaInfo, 1000);
-    let button = document.getElementById('ig-button');
-    button.disabled = true;
+    let botao = document.getElementById('ig-button');
+    if (propulsao === false) {
+        clearInterval(cancel);
+    }
+    botao.disabled = true;
 }
 
 //Atualiza o painel de informações
@@ -41,9 +42,7 @@ function atualizaInfo() {
     el.innerText = seconds + 's';
     let el1 = document.getElementById('avisos');
 
-    //verifica se botão está pressionado na segunda etapa
-    //verifica se botão foi pressionado na terceira etapa
-
+    consultaPropulsao();
     if (propulsao === true) {
         if (ehEtapa1()) {
             el1.innerText = "Primeira etapa do lançamento em andamento."
@@ -56,6 +55,7 @@ function atualizaInfo() {
             velocidade.incrementaVel(aceleração2);
             peso.decrementaPeso(combustivel.getConsEt2());
         } else if (ehEtapa3()){
+            propulsao = true;
             el1.innerText = "Terceira etapa do lançamento em andamento."
             combustivel.decrementa3();
             velocidade.incrementaVel(aceleração3);
@@ -70,6 +70,33 @@ function atualizaInfo() {
     }
 }
 
+function consultaPropulsao() {
+    if (ehEtapa1()) {
+        propulsao = true;
+    } else if (ehEtapa2()) {
+        confereCentelha();
+    }
+}
+//confere se a centelha continua acesa durante o segundo estágio
+function confereCentelha(){
+    let botao1 = document.getElementById('etapa2-button');
+    var intervalo;
+
+    botao1.addEventListener("mousedown", function(e){
+        if(e.buttons == 2){
+            intervalo = setInterval(propulsao = true, 100);
+        }
+    });
+
+    botao1.addEventListener("mouseup", function(){
+        botao1.disabled = true;
+        //se na etapa 2 parar de apertar o botão, foguete falha.
+        if(ehEtapa2()) {
+            propulsao = false;
+        }
+    });
+}
+
 function ehEtapa1(){
     if (seconds <= durEtap1) 
         return true;
@@ -78,14 +105,14 @@ function ehEtapa1(){
 }
 
 function ehEtapa2(){
-    if (seconds <= durEtap1 + durEtap2) 
+    if (seconds <= durEtap1 + durEtap2 && seconds > durEtap1) 
         return true;
     else 
         return false
 }
 
 function ehEtapa3(){
-    if (seconds <= duracaoTotal) 
+    if (seconds <= duracaoTotal && seconds > durEtap1 + durEtap2)  
         return true;
     else 
         return false;

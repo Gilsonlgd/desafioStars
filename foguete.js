@@ -41,6 +41,9 @@ function atualizaInfo() {
     el.innerText = seconds + 's';
     let el1 = document.getElementById('avisos');
 
+    //verifica se botão está pressionado na segunda etapa
+    //verifica se botão foi pressionado na terceira etapa
+
     if (propulsao === true) {
         if (ehEtapa1()) {
             el1.innerText = "Primeira etapa do lançamento em andamento."
@@ -62,6 +65,8 @@ function atualizaInfo() {
         } else {
             el1.innerText = "Satélite Liberado com sucesso."
         }
+    } else {
+        el1.innerText = "Falha na propulsão."
     }
 }
 

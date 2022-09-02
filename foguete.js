@@ -27,7 +27,7 @@ let velocidade = new Velocidade();
 //Inicia o lançamento do foguete.
 function iniciaLanc() {
     propulsao = true;
-    let cancel = setInterval(atualizaInfo, 1000);
+    setInterval(atualizaInfo, 1000);
     let botao = document.getElementById('ig-button');
     botao.disabled = true;
 }
